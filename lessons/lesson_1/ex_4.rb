@@ -25,8 +25,9 @@ elsif qc_eq["D"] == 0 # 4x^2-12x+9=0 1,5
   qc_eq["x1"] = qc_eq["x2"] = ((-1 * qc_eq["b"]) / (2 * qc_eq["a"])).round(2)
 else # 2x^2+5x-2=0 -2.85/0.35
   #(-b+-sqrt(D))/2a
-  qc_eq["x1"] = ((-1 * qc_eq["b"] - Math.sqrt(qc_eq["D"])) / (2 * qc_eq["a"])).round(2)
-  qc_eq["x2"] = ((-1 * qc_eq["b"] + Math.sqrt(qc_eq["D"])) / (2 * qc_eq["a"])).round(2)
+  sqrt = Math.sqrt(qc_eq["D"])
+  qc_eq["x1"] = ((-1 * qc_eq["b"] - sqrt) / (2 * qc_eq["a"])).round(2)
+  qc_eq["x2"] = ((-1 * qc_eq["b"] + sqrt) / (2 * qc_eq["a"])).round(2)
 end
 puts qc_eq
 
