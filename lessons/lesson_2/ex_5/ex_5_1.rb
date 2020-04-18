@@ -21,6 +21,6 @@ keys = %w(d m y)
 date_hash = keys.zip(gets.chomp.split(',').map(&:to_i)).to_h
 day_number = date_hash["d"]
 (1...date_hash["m"]).each { |month| day_number += COMMON_YEAR_DAYS_IN_MONTH[month] }
-day_number += 1 if is_leap_year?(date_hash["y"])
+day_number += 1 if is_leap_year?(date_hash["y"]) and date_hash["m"] > 2
 
 puts "Date: #{date_hash["d"]}, #{date_hash["m"]}, #{date_hash["y"]} | Serial number: #{day_number}"

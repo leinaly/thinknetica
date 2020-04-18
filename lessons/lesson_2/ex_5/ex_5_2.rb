@@ -11,7 +11,6 @@
 
 require '../lesson_2/ex_1'
 
-# 1 variant
 puts "Enter date numbers separated by comma (day, month, year): "
 keys = %w(d m y)
 
@@ -20,7 +19,6 @@ month_days_hash = fill_months_hash(date_hash["y"], true)
 day_number = month_days_hash.fetch_values(*(1...date_hash["m"]).to_a).sum + date_hash["d"]
 
 puts "Date: #{date_hash["d"]}, #{date_hash["m"]}, #{date_hash["y"]} | Serial number: #{day_number}"
-
 
 
 

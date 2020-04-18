@@ -9,18 +9,18 @@
 =end
 
 # {"product_name" => {"product_price"=> price, "product_count"=> count, "product_total_price"=> pr_total}, "total_price"=>total}
-PRODUCT_PRICE_KEY = "product_price"
-PRODUCT_COUNT_KEY = "product_count"
-PRODUCT_TOTAL_KEY = "product_total_price"
-TOTAL_PRICE_KEY = "total_price"
+PRODUCT_PRICE_KEY = :product_price
+PRODUCT_COUNT_KEY = :product_count
+PRODUCT_TOTAL_KEY = :product_total_price
+TOTAL_PRICE_KEY = :total_price
 
 def calculate_product_total(product)
   product[PRODUCT_TOTAL_KEY] = (product[PRODUCT_PRICE_KEY] * product[PRODUCT_COUNT_KEY]).round(2)
   product
 end
 
-def enter_products!(products)
-  total_price = 0
+def enter_products
+  products = {}
   loop do
     product = {}
     puts "Enter product name: "
@@ -32,21 +32,27 @@ def enter_products!(products)
     puts "Enter product amount: "
     product_count = gets.chomp.to_f
     product[PRODUCT_COUNT_KEY] = product_count
-    products[product_name] = calculate_product_total(product)
-    total_price += product[PRODUCT_TOTAL_KEY]
+    products[product_name] = product
+  end
+  products
+end
+
+
+def calculate_totals!(products)
+  total_price = 0
+  products.each do |product_name, product_info|
+    products[product_name] = calculate_product_total(product_info)
+    total_price += product_info[PRODUCT_TOTAL_KEY]
   end
   products[TOTAL_PRICE_KEY] = total_price.round(2)
   products
 end
 
-
-products = {}
 puts "==Entering products started=="
 
-puts enter_products!(products)
+products = enter_products
+puts calculate_totals!(products)
 
 puts "==Entering products finished=="
 
 puts "Total basket price: #{products[TOTAL_PRICE_KEY]}"
-
-
