@@ -9,10 +9,6 @@
 =end
 
 # {"product_name" => {"product_price"=> price, "product_count"=> count, "product_total_price"=> pr_total}, "total_price"=>total}
-PRODUCT_PRICE_KEY = :product_price
-PRODUCT_COUNT_KEY = :product_count
-PRODUCT_TOTAL_KEY = :product_total_price
-TOTAL_PRICE_KEY = :total_price
 
 def calculate_product_total(product)
   product[PRODUCT_TOTAL_KEY] = (product[PRODUCT_PRICE_KEY] * product[PRODUCT_COUNT_KEY]).round(2)
@@ -28,23 +24,22 @@ def enter_products
     break if product_name.downcase == "stop"
     puts "Enter product price: "
     product_price = gets.chomp.to_f
-    product[PRODUCT_PRICE_KEY] = product_price
+    product[:product_price] = product_price
     puts "Enter product amount: "
     product_count = gets.chomp.to_f
-    product[PRODUCT_COUNT_KEY] = product_count
+    product[:product_count] = product_count
     products[product_name] = product
   end
   products
 end
 
-
 def calculate_totals!(products)
   total_price = 0
   products.each do |product_name, product_info|
     products[product_name] = calculate_product_total(product_info)
-    total_price += product_info[PRODUCT_TOTAL_KEY]
+    total_price += product_info[:product_total_price]
   end
-  products[TOTAL_PRICE_KEY] = total_price.round(2)
+  products[:total_price] = total_price.round(2)
   products
 end
 
@@ -55,4 +50,4 @@ puts calculate_totals!(products)
 
 puts "==Entering products finished=="
 
-puts "Total basket price: #{products[TOTAL_PRICE_KEY]}"
+puts "Total basket price: #{products[:total_price]}"
