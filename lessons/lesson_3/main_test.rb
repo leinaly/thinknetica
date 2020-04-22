@@ -116,3 +116,6 @@ puts north_train.current_station.name
 puts north_train.next_station.name
 puts north_train.prev_station
 
+north_train.go_to_prev_station
+puts north_train.current_station.name
+

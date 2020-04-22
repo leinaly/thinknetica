@@ -8,9 +8,7 @@
 =end
 
 class Route
-  attr_reader :stations
-  attr_reader :start_station
-  attr_reader :end_station
+  attr_reader :stations, :start_station, :end_station
 
   def initialize(start_station, end_station)
     @start_station = start_station
@@ -23,9 +21,9 @@ class Route
   end
 
   def delete_station(station)
-    return "Start station can't be deleted! Please choose middle one." if station.name == @start_station.name
-    return "End station can't be deleted! Please choose middle one." if station.name == @end_station.name
-    stations.delete_if { |el| el.name == station.name }
+    return "Start station can't be deleted! Please choose middle one." if station == @start_station
+    return "End station can't be deleted! Please choose middle one." if station == @end_station
+    stations.delete(station)
   end
 
   def show_all_stations
@@ -36,10 +34,10 @@ class Route
   end
 
   def next_station_for(station)
-    case station.name
-    when @start_station.name
+    case station
+    when @start_station
       @stations.first
-    when @end_station.name
+    when @end_station
       @end_station
     else
       current_index = @stations.find_index { |el| el.name == station.name }
@@ -48,10 +46,10 @@ class Route
   end
 
   def prev_station_for(station)
-    case station.name
-    when @start_station.name
+    case station
+    when @start_station
       @start_station
-    when @end_station.name
+    when @end_station
       @stations.last
     else
       current_index = @stations.find_index { |el| el.name == station.name }

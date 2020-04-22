@@ -16,12 +16,7 @@
 =end
 
 class Train
-  attr_reader :number
-  attr_reader :type
-  attr_reader :wagons_count
-  attr_reader :speed
-  attr_reader :route
-  attr_reader :current_station
+  attr_reader :number, :type, :wagons_count, :speed, :route, :current_station
 
   TYPE = {"freight train" => 0, "passenger train" => 1}
 
@@ -65,15 +60,17 @@ class Train
   end
 
   def go_to_next_station
-    return "Train already finished route!" if @current_station == @route.end_station
+    return puts "Train already finished route!" if @current_station == @route.end_station
     @current_station.send_train(self)
+    return puts "No next station! Train already on the last station of the route." if next_station.nil?
     @current_station = next_station
     @current_station.receive(self)
   end
 
   def go_to_prev_station
-    return "Train already at the start of route!" if @current_station == @route.start_station
+    return puts "Train already at the start of route!" if @current_station == @route.start_station
     @current_station.send_train(self)
+    return puts "No previous station! Train already on the first station of the route." if prev_station.nil?
     @current_station = prev_station
     @current_station.receive(self)
   end
@@ -81,14 +78,14 @@ class Train
   def next_station
     return "Route not set!" if @route.nil?
     n_st = @route.next_station_for(@current_station)
-    return "No next station! Train already on the last station of the route." if n_st.name == @current_station.name
+    n_st = nil if n_st == @current_station
     n_st
   end
 
   def prev_station
     return "Route not set!" if @route.nil?
     p_st = @route.prev_station_for(@current_station)
-    return "No previous station! Train already on the first station of the route." if p_st.name == @current_station.name
+    p_st = nil if p_st == @current_station
     p_st
   end
 end
