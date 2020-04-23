@@ -8,53 +8,44 @@
 =end
 
 class Route
-  attr_reader :stations, :start_station, :end_station
+  attr_reader :intermediate_stations, :start_station, :end_station
 
   def initialize(start_station, end_station)
     @start_station = start_station
     @end_station = end_station
-    @stations = []
+    @intermediate_stations = []
   end
 
   def add_station(station)
-    @stations << station
+    @intermediate_stations << station
   end
 
   def delete_station(station)
     return "Start station can't be deleted! Please choose middle one." if station == @start_station
     return "End station can't be deleted! Please choose middle one." if station == @end_station
-    stations.delete(station)
+    @intermediate_stations.delete(station)
+  end
+
+  def stations
+    [@start_station, @intermediate_stations, @end_station].flatten
+  end
+
+  def station_index(station)
+    stations.index(station)
   end
 
   def show_all_stations
-    route_str = "1. #{@start_station.name}"
-    @stations.each.with_index(2) { |station, index| route_str += "\n#{index}. #{station.name}" }
-    route_str += "\n#{stations.size + 2}. #{@end_station.name}\n"
+    route_str = ""
+    stations.each.with_index(1) { |station, index| route_str += "\n#{index}. #{station.name}" }
     puts route_str
   end
 
   def next_station_for(station)
-    case station
-    when @start_station
-      @stations.first
-    when @end_station
-      @end_station
-    else
-      current_index = @stations.find_index { |el| el.name == station.name }
-      current_index == @stations.size - 1 ? @end_station : @stations[current_index + 1]
-    end
+    stations[station_index(station) + 1] if station_index(station) != stations.count
   end
 
   def prev_station_for(station)
-    case station
-    when @start_station
-      @start_station
-    when @end_station
-      @stations.last
-    else
-      current_index = @stations.find_index { |el| el.name == station.name }
-      current_index == 0 ? @start_station : @stations[current_index - 1]
-    end
+    stations[station_index(station) - 1] if station_index(station) != 0
   end
 
 end
