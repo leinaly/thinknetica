@@ -50,18 +50,22 @@ class Train
   def next_station
     return puts "Route not set!" if @route.nil?
     n_st = @route.next_station_for(@current_station)
-    n_st = nil if n_st == @current_station
+    n_st = nil if current_station?(n_st)
     n_st
   end
 
   def prev_station
-    return puts "Route not set!" if @route.nil?
+    return puts "Route not set!" unless @route
     p_st = @route.prev_station_for(@current_station)
-    p_st = nil if p_st == @current_station
+    p_st = nil if current_station?(p_st)
     p_st
   end
 
   protected #cause need to be reimplemented in child classes
+
+  def current_station?(station)
+    station == @current_station
+  end
 
   def add_wagon(wagon)
     return puts "Need to slow down train first!" if speed != 0
