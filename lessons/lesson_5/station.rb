@@ -5,17 +5,17 @@ class Station
 
   attr_reader :name, :trains
 
-  @@instance_obj = []
+  @@stations = []
 
   def initialize(name)
     @name = name
     @trains = []
-    @@instance_obj << self
+    @@stations << self
     register_instance
   end
 
   def self.all
-    @@instance_obj.each { |el| puts el.name }
+    @@stations.each { |el| puts el.name }
   end
 
   def receive(train)

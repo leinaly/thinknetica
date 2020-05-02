@@ -5,7 +5,7 @@ class Train
   include InstanceCounter
   include Company
 
-  @@instance_obj = []
+  @@trains = {}
 
   attr_reader :number, :type, :wagons, :speed, :route, :current_station
 
@@ -17,12 +17,12 @@ class Train
     @type = type
     @wagons = []
     @speed = 0
-    @@instance_obj << self
+    @@trains[number] = self
     register_instance
   end
 
   def self.find(number)
-    @@instance_obj.find{|el| el.number == number}
+    @@trains[number]
   end
 
   def accelerate(step)
