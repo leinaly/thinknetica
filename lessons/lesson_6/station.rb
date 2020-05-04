@@ -26,10 +26,6 @@ class Station
     @trains << train
   end
 
-  def show_all_trains(trains_to_show = @trains)
-    trains_to_show.each.with_index(1) { |train, index| puts "#{index}. #{train.number}" }
-  end
-
   def send_train(train)
     @trains.delete(train)
   end

@@ -26,12 +26,6 @@ class Route
     @intermediate_stations.delete(station)
   end
 
-  def show_all_stations
-    route_str = ""
-    stations.each.with_index(1) { |station, index| route_str += "\n#{index}. #{station.name}" }
-    route_str
-  end
-
   def next_station_for(station)
     stations[station_index(station) + 1] if station_index(station) != stations.count
   end

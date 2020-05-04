@@ -1,9 +1,11 @@
 require_relative 'modules/instance_counter'
 require_relative 'modules/company'
+require_relative 'modules/validation'
 
 class Train
   include InstanceCounter
   include Company
+  include Validation
 
   @@trains = {}
 
@@ -20,13 +22,6 @@ class Train
     validate!
     @@trains[number] = self
     register_instance
-  end
-
-  def valid?
-      validate!
-      true
-    rescue
-      false
   end
 
   def self.find(number)
