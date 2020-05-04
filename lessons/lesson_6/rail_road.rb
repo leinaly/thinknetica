@@ -21,7 +21,6 @@ def seed
   tm_station   = Station.new("Tampa")
   mm_station   = Station.new("Miami")
 
-
 #north obj for checking exceptions situations
   north_route = Route.new(prtlnd_station, wdc_station)
   north_route.add_station(bstn_station)
@@ -29,7 +28,7 @@ def seed
   north_route.add_station(ph_station)
 
   puts "North Route: "
-  north_route.show_all_stations
+  puts north_route.show_all_stations
   puts ""
 
 #south obj for checking specification
@@ -38,18 +37,18 @@ def seed
   south_route.add_station(tm_station)
 
   puts "South Route: "
-  south_route.show_all_stations
+  puts south_route.show_all_stations
 
   puts "Tried to delete"
   puts north_route.delete_station(prtlnd_station)
   puts north_route.delete_station(wdc_station)
-  north_route.show_all_stations
+  puts north_route.show_all_stations
   puts ""
   south_route.delete_station(or_station)
-  south_route.show_all_stations
+  puts south_route.show_all_stations
   puts ""
   south_route.add_station(or_station)
-  south_route.show_all_stations
+  puts south_route.show_all_stations
 
 
   puts "Create train & accelerate"

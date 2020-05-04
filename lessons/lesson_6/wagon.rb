@@ -1,7 +1,9 @@
 require_relative 'modules/company'
+require_relative 'modules/validation'
 
 class Wagon
   include Company
+  include Validation
 
   attr_reader :type
 
@@ -10,13 +12,6 @@ class Wagon
   def initialize(type = TYPE["passenger wagon"])
     @type = type
     validate!
-  end
-
-  def valid?
-      validate!
-      true
-    rescue
-      false
   end
 
   private

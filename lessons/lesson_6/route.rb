@@ -1,8 +1,10 @@
 require_relative 'modules/instance_counter'
+require_relative 'modules/validation'
 
 class Route
 
   include InstanceCounter
+  include Validation
 
   attr_reader :intermediate_stations, :start_station, :end_station
 
@@ -14,27 +16,20 @@ class Route
     register_instance
   end
 
-  def valid?
-    validate!
-    true
-  rescue
-    false
-  end
-
   def add_station(station)
     @intermediate_stations << station
   end
 
   def delete_station(station)
-    return puts "Start station can't be deleted! Please choose middle one." if station == @start_station
-    return puts "End station can't be deleted! Please choose middle one." if station == @end_station
+    raise "Start station can't be deleted! Please choose middle one." if station == @start_station
+    raise "End station can't be deleted! Please choose middle one." if station == @end_station
     @intermediate_stations.delete(station)
   end
 
   def show_all_stations
     route_str = ""
     stations.each.with_index(1) { |station, index| route_str += "\n#{index}. #{station.name}" }
-    puts route_str
+    route_str
   end
 
   def next_station_for(station)

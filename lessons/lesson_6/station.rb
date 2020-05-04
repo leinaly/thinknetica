@@ -1,7 +1,9 @@
 require_relative 'modules/instance_counter'
+require_relative 'modules/validation'
 
 class Station
   include InstanceCounter
+  include Validation
 
   attr_reader :name, :trains
 
@@ -15,15 +17,8 @@ class Station
     register_instance
   end
 
-  def valid?
-    validate!
-    true
-  rescue
-    false
-  end
-
   def self.all
-    @@stations.each { |el| puts el.name }
+    @@stations
   end
 
   def receive(train)
