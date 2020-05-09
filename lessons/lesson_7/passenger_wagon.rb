@@ -1,21 +1,14 @@
 class PassengerWagon < Wagon
 
-  attr_reader :seats_count, :occupied
-
-  def initialize(seats_count = 30, type = TYPE["passenger wagon"])
-    raise "Seats count can't be blank!" if seats_count.nil?
-    super(type)
-    @seats_count = seats_count
-    @occupied = 0
+  def initialize(capacity = 30, type = TYPE["passenger wagon"])
+    super(capacity, type)
   end
 
-  def take_seat
-    raise "No available seats!" if @seats_count == @occupied
-    @occupied += 1
-  end
+  alias         seats_count capacity
+  alias_method :take_seat, :take_capacity
 
-  def available
-    @seats_count - @occupied
+  def take_capacity(amount)
+    super(1)
   end
 
 end

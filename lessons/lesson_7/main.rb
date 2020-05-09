@@ -161,7 +161,7 @@ end
   def delete_station_from_route(route)
     menu_retry("Route was updated"){
       puts "Enter station number for deletion:"
-      route.go_through_stations(@@format_stations)
+      route.each_stations(@@format_stations)
       user_input = gets.chomp.to_i
       raise "Incorrect number of station!" if user_input>=route.stations.count
       station_to_delete = route.stations[user_input]
@@ -237,7 +237,7 @@ end
 
 def move_train_on_route
   raise "Need to have one route & one train to perform this action!" if @routes.count==0 || @trains.count==0
-  menu_retry("Train on #{train.current_station.name}"){
+  menu_retry("Train was moved"){
   puts "Choose train:"
   show(@trains, @@format_trains)
   user_input = gets.chomp.to_i
@@ -257,7 +257,8 @@ def show_stations_and_trains
   @stations.each do |station|
     puts "Station: #{station.name}"
     puts "Trains:"
-    station.go_through_trains(@@format_trains)
+    station.each_train(@@format_trains)
+    #station.go_through_trains(@@format_trains)
     puts "<====================================>"
   end
 end
@@ -276,7 +277,7 @@ end
     raise "Train have no wagons please add first!" if train.wagons.empty?
 
     puts "Choose wagon by index:"
-    train.go_through_wagons(@@format_wagons)
+    train.each_wagons(@@format_wagons)
     wagon_index = user_input = gets.chomp.to_i
     raise "Incorrect index for wagon!" if user_input >= train.wagons.count
     if train.wagons[wagon_index].is_a?(PassengerWagon)
@@ -287,7 +288,6 @@ end
       train.wagons[wagon_index].take_capacity(user_input)
     end
     }
-
   end
 
   def menu_retry(success_msg, &block)

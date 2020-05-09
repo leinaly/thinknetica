@@ -43,7 +43,7 @@ class Station
     end
   end
 
-  def go_through_trains(block)
+  def each_train(block)
     @trains.each_with_index {|train, index| block.call(train, index)}
   end
 

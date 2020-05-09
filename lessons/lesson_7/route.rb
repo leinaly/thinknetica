@@ -38,7 +38,7 @@ class Route
     [@start_station, @intermediate_stations, @end_station].flatten
   end
 
-  def go_through_stations(block)
+  def each_stations(block)
     stations.each_with_index {|station, index| block.call(station, index)}
   end
 
