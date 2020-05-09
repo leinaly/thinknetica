@@ -7,7 +7,7 @@ class PassengerWagon < Wagon
   alias         seats_count capacity
   alias_method :take_seat, :take_capacity
 
-  def take_capacity(amount)
+  def take_capacity
     super(1)
   end
 

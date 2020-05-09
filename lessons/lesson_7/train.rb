@@ -82,7 +82,7 @@ class Train
     p_st
   end
 
-  def each_wagons(block)
+  def each_wagon(block)
     @wagons.each_with_index {|wagon, index| block.call(wagon, index) }
   end
 
