@@ -277,7 +277,7 @@ end
     raise "Train have no wagons please add first!" if train.wagons.empty?
 
     puts "Choose wagon by index:"
-    train.each_wagons(@@format_wagons)
+    train.each_wagon(@@format_wagons)
     wagon_index = user_input = gets.chomp.to_i
     raise "Incorrect index for wagon!" if user_input >= train.wagons.count
     if train.wagons[wagon_index].is_a?(PassengerWagon)
