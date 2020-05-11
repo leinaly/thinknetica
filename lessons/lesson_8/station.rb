@@ -32,7 +32,7 @@ class Station
 
   def show_trains_by_type(type = "")
     case type
-    when "" then
+    when ""
       show_all_trains
     when Train::TYPE["passenger train"]
       puts "Passenger trains: "
