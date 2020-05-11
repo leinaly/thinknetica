@@ -1,2 +1,2 @@
 # thinknetica
-Repository for study projects on thinknetica study course
+Repository for study projects on thinknetica RoR course
