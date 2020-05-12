@@ -1,5 +1,7 @@
-require_relative "modules/instance_counter"
-require_relative "modules/validation"
+# frozen_string_literal: true
+
+require_relative 'modules/instance_counter'
+require_relative 'modules/validation'
 
 class Route
   include InstanceCounter
@@ -22,6 +24,7 @@ class Route
   def delete_station(station)
     raise "Start station can't be deleted! Please choose middle one." if station == @start_station
     raise "End station can't be deleted! Please choose middle one." if station == @end_station
+
     @intermediate_stations.delete(station)
   end
 

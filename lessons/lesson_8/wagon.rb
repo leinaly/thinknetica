@@ -1,5 +1,7 @@
-require_relative "modules/company"
-require_relative "modules/validation"
+# frozen_string_literal: true
+
+require_relative 'modules/company'
+require_relative 'modules/validation'
 
 class Wagon
   include Company
@@ -7,9 +9,9 @@ class Wagon
 
   attr_reader :type, :capacity, :occupied
 
-  TYPE = {"freight wagon" => 0, "passenger wagon" => 1}
+  TYPE = { 'freight wagon' => 0, 'passenger wagon' => 1 }
 
-  def initialize(capacity, type = TYPE["passenger wagon"])
+  def initialize(capacity, type = TYPE['passenger wagon'])
     @type = type
     @capacity = capacity
     @occupied = 0
@@ -21,7 +23,8 @@ class Wagon
   end
 
   def take_capacity(amount = 1)
-    raise "No available capacity!" if @capacity == @occupied
+    raise 'No available capacity!' if @capacity == @occupied
+
     @occupied += amount
   end
 

@@ -1,6 +1,8 @@
-require_relative "modules/instance_counter"
-require_relative "modules/company"
-require_relative "modules/validation"
+# frozen_string_literal: true
+
+require_relative 'modules/instance_counter'
+require_relative 'modules/company'
+require_relative 'modules/validation'
 
 class Train
   include InstanceCounter
@@ -11,10 +13,10 @@ class Train
 
   attr_reader :number, :type, :wagons, :speed, :route, :current_station
 
-  TYPE = {"freight train" => 0, "passenger train" => 1}
+  TYPE = { 'freight train' => 0, 'passenger train' => 1 }
   NUMB_FORMAT = /^[a-zA-Z0-9]{3}-?[a-zA-Z0-9]{2}$/i
 
-  def initialize(number, type = TYPE["passenger train"])
+  def initialize(number, type = TYPE['passenger train'])
     @number = number
     @type = type
     @wagons = []
@@ -33,52 +35,64 @@ class Train
   end
 
   def accelerate(step)
-    raise "Can accelerate only by numeric value!" unless step.is_a?(Integer)
-    raise "Please accelerate with positive value!" if step < 0
+    raise 'Can accelerate only by numeric value!' unless step.is_a?(Integer)
+    raise 'Please accelerate with positive value!' if step.negative?
+
     @speed += step
   end
 
   def slow_down(step = -@speed)
-    raise "Can slow down only by numeric value!" unless step.is_a?(Integer)
-    raise "Please slow down with negative value!" if step > 0
-    raise "Already stopped!" if @speed == 0
+    raise 'Can slow down only by numeric value!' unless step.is_a?(Integer)
+    raise 'Please slow down with negative value!' if step.positive?
+
+    raise 'Already stopped!' if @speed.zero?
+
     @speed += step
   end
 
-  def set_route(route)
-    raise "Can set as route only Route obj!" unless route.is_a?(Route)
+  def add_route(route)
+    raise 'Can set as route only Route obj!' unless route.is_a?(Route)
+
     @route = route
     @route.start_station.receive(self)
     @current_station = route.start_station
   end
 
   def go_to_next_station
-    raise "Train already finished route!" if @current_station == @route.end_station
+    raise 'Train already finished route!' if @current_station == @route.end_station
+
     @current_station.send_train(self)
-    raise "No next station! Train already on the last station of the route." if next_station.nil?
+    raise 'No next station! Train already on the last station of the route.' if next_station.nil?
+
     @current_station = next_station
     @current_station.receive(self)
   end
 
   def go_to_prev_station
-    raise "Train already at the start of route!" if @current_station == @route.start_station
+    raise 'Train already at the start of route!' if @current_station == @route.start_station
+
     @current_station.send_train(self)
-    raise "No previous station! Train already on the first station of the route." if prev_station.nil?
+    raise 'No previous station! Train already on the first station of the route.' if prev_station.nil?
+
     @current_station = prev_station
     @current_station.receive(self)
   end
 
   def next_station
-    raise "Route not set!" if @route.nil?
+    raise 'Route not set!' if @route.nil?
+
     n_st = @route.next_station_for(@current_station)
     n_st = nil if current_station?(n_st)
+
     n_st
   end
 
   def prev_station
-    raise "Route not set!" unless @route
+    raise 'Route not set!' unless @route
+
     p_st = @route.prev_station_for(@current_station)
     p_st = nil if current_station?(p_st)
+
     p_st
   end
 
@@ -93,21 +107,23 @@ class Train
   end
 
   def add_wagon(wagon)
-    raise "Need to slow down train first!" if speed != 0
+    raise 'Need to slow down train first!' if speed != 0
+
     @wagons << wagon
   end
 
   def remove_wagon(wagon)
-    raise "Need to slow down train first!" if speed != 0
-    raise "Nothing to remove!" if @wagons.count == 0
+    raise 'Need to slow down train first!' if speed != 0
+    raise 'Nothing to remove!' if @wagons.count.zero?
+
     @wagons.delete(wagon)
   end
 
   private
 
   def validate!
-    raise "Incorrect number length. Must be at least 4 characters!" unless /.{4}/.match?(number)
-    raise "Incorrect number format. Pattern : {...-..}" unless NUMB_FORMAT.match?(number)
+    raise 'Incorrect number length. Must be at least 4 characters!' unless /.{4}/.match?(number)
+    raise 'Incorrect number format. Pattern : {...-..}' unless NUMB_FORMAT.match?(number)
     raise "Not applicable type of train! Need to be from TYPE const: #{TYPE}" unless TYPE.value?(type)
   end
 end

@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class PassengerWagon < Wagon
-  def initialize(capacity = 30, type = TYPE["passenger wagon"])
+  def initialize(capacity = 30, type = TYPE['passenger wagon'])
     super(capacity, type)
   end
 
